@@ -1,33 +1,14 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/category';
-import { onMounted, ref, watch } from 'vue';
-import {useRoute} from 'vue-router'
-import { getBannerAPI } from '@/apis/home';
 import GoodsItem from '../Home/components/GoodsItem.vue';
-import { onBeforeRouteUpdate } from 'vue-router';
+import {useBanner} from './composables/useBanner'
+import {useCategory} from './composables/useCategory'
+
 // 获取分类
-const categoryData = ref({})
-const route = useRoute()
-const getCategory = async (id = route.params.id) => {
-    const res = await getCategoryAPI(id)
-    categoryData.value = res.result
-}
-onMounted(() => {
-    getCategory()
-})
+const {categoryData} = useCategory()
+
 
 // 获取 banner
-const bannerList = ref([])
-const getBanner = async () => {
-    const res = await getBannerAPI({
-      distributionSite : '2'
-    })
-    bannerList.value = res.result
-}
-
-onMounted(() => {
-    getBanner()
-})
+const {bannerList} = useBanner()
 
 // 暂时监听路由变化，之后会删除
 // watch(route,()=>{
@@ -35,13 +16,6 @@ onMounted(() => {
 //     getBanner()
 // })
 
-// 在路由参数变化时候， 可以把分类数据接口重新发送
-onBeforeRouteUpdate((to) => {
-  console.log('路由变化了');
-  // 问题：路由参数发生变化了
-  console.log(to);
-  getCategory(to.params.id)
-})
 
 
 </script>
