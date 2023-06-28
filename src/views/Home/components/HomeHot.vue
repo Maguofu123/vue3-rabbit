@@ -20,9 +20,9 @@ onMounted(() => {
     <ul class="goods-list">
     <li v-for="item in newList" :key="item.id">
       <RouterLink to="/">
-        <img :src="item.picture" alt="" />
-        <p class="name">{{ item.name }}</p>
-        <p class="price">&yen;{{ item.price }}</p>
+        <img v-img-lazy="item.picture" alt="" />
+        <p class="name">{{ item.title }}</p>
+        <p class="desc">{{ item.alt }}</p>
       </RouterLink>
     </li>
   </ul>
@@ -64,17 +64,16 @@ onMounted(() => {
       height: 306px;
     }
 
+
     p {
       font-size: 22px;
       padding-top: 12px;
       text-align: center;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
     }
 
-    .price {
-      color: $priceColor;
+    .desc {
+      color: #999;
+      font-size: 18px;
     }
   }
 }
