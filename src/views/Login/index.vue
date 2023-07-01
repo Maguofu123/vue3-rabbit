@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const form = ref({
   account: '',
   password: '',
-  agree: true
+  agree: false
 })
 
 // 2. 准备规则对象
@@ -32,6 +32,18 @@ const rules = {
       }
     }
   ]
+}
+
+// 3.获取form实例
+const formRef = ref(null)
+const doLogin = () => {
+  // 调用实例方法
+  formRef.value.validate((valid) => {
+    // valid 所有表单都通过校验
+    console.log(valid);
+    // 通过校验 执行登录逻辑
+    
+  })
 }
 </script>
 
@@ -58,7 +70,7 @@ const rules = {
         <div class="account-box">
           <div class="form">
             <!-- 绑定表单对象和规则对象 -->
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
               <!-- 绑定使用的规则字段 -->
               <el-form-item prop="account" label="账户">
                 <!-- 双向绑定表单数据 -->
@@ -72,7 +84,7 @@ const rules = {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
