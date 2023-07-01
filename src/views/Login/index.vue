@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-
+import { loginAPI } from '@/apis/user'
+import 'element-plus/theme-chalk/el-message.css'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 // 表单校验 账户名 + 密码
 
 // 1. 准备表单对象
@@ -26,7 +29,7 @@ const rules = {
         // 勾选通过，不勾选不通过
         if (value) {
           callback()
-        }else{
+        } else {
           callback(new Error('请勾选协议'))
         }
       }
@@ -36,13 +39,21 @@ const rules = {
 
 // 3.获取form实例
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
+  const { account, password } = form.value
   // 调用实例方法
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     // valid 所有表单都通过校验
-    console.log(valid);
     // 通过校验 执行登录逻辑
-    
+    if (valid) {
+      const res = await loginAPI({ account, password })
+      console.log(res);
+      // 1. 提示用户
+      ElMessage({ type: 'success', message: '登录成功'})
+      // 2. 跳到首页
+      router.replace({path: '/'})
+    }
   })
 }
 </script>
