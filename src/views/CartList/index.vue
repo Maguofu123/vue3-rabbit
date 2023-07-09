@@ -4,6 +4,13 @@ import {useCartStore} from '@/stores/cartStore'
 // const {cartList} = useCartStore()
 // 直接赋值
 const cartStore = useCartStore()
+
+// 单选回调
+const singleCheck = (i, selected) => {
+    // store cartList 数组
+    console.log(i, selected);
+    cartStore.singleCheck(i.skuId, selected)
+}
 </script>
 
 <template>
@@ -21,13 +28,13 @@ const cartStore = useCartStore()
               <th width="180">数量</th>
               <th width="180">小计</th>
               <th width="140">操作</th>
-            </tr>
+            </tr> 
           </thead>
           <!-- 商品列表 -->
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <el-checkbox :model-value="i.selected"  @change="(selected) => singleCheck(i, selected)"/>
               </td>
               <td>
                 <div class="goods">
