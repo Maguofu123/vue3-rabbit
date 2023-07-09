@@ -21,9 +21,18 @@ export const useCartStore = defineStore('cart', () => {
         }
     }
 
+    // 删除购物车
+    const delCart = (skuId) => {
+        // 1. 找到下标
+        // 2. 数组过滤
+        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+        cartList.value.splice(idx, 1)
+    }
+
     return {
         cartList,
-        addCart
+        addCart,
+        delCart
     }
 
 },{
