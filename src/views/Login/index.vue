@@ -4,8 +4,10 @@ import 'element-plus/theme-chalk/el-message.css'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { useCartStore } from '@/stores/cartStore';
 // 表单校验 账户名 + 密码
 const userStore = useUserStore()
+const cartStore = useCartStore()
 // 1. 准备表单对象
 const form = ref({
   account: '',
@@ -53,6 +55,7 @@ const doLogin = () => {
       ElMessage({ type: 'success', message: '登录成功' })
       // 2. 跳到首页
       router.replace({ path: '/' })
+      cartStore.updateNewList()
     }
   })
 }

@@ -54,7 +54,10 @@ export const useCartStore = defineStore('cart', () => {
         cartList.value = res.result
     }
 
-
+    // 清楚购物车
+    const clearCart = () => {
+        cartList.value = []
+    }
     
     // 单选功能
     const singleCheck = (skuId, selected) => {
@@ -92,7 +95,9 @@ export const useCartStore = defineStore('cart', () => {
         isAll,
         allCheck,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+        clearCart,
+        updateNewList
     }
 
 },{
