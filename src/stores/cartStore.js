@@ -3,7 +3,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { insertCartAPI, findNewCartListAPI} from '@/apis/cart'
+import { insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
 
 
 
@@ -18,8 +18,7 @@ export const useCartStore = defineStore('cart', () => {
         if (isLogin.value){
             // 登录之后加入购物车逻辑
             await insertCartAPI(goods)
-            const res = await findNewCartListAPI()
-            cartList.value = res.result
+            updateNewList()
         }else{
             // 添加购物车
         // 已添加过 - count + 1
@@ -36,13 +35,27 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     // 删除购物车
-    const delCart = (skuId) => {
-        // 1. 找到下标
-        // 2. 数组过滤
-        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
-        cartList.value.splice(idx, 1)
+    const delCart = async (skuId) => {
+        if (isLogin.value){
+            // 实现删除功能
+            await delCartAPI([skuId])
+            updateNewList()
+        }else{
+            // 1. 找到下标
+            // 2. 数组过滤
+            const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+            cartList.value.splice(idx, 1)
+        }
+    }
+        
+    // 获取最新购物车列表action
+    const updateNewList = async () => {
+        const res = await findNewCartListAPI()
+        cartList.value = res.result
     }
 
+
+    
     // 单选功能
     const singleCheck = (skuId, selected) => {
         //通过skuId找到要修改的那一项 把它的selected修改为传过来的selected
