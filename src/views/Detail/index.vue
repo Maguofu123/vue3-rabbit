@@ -9,7 +9,7 @@ import { useCartStore} from '@/stores/cartStore'
 const cartStore = useCartStore()
 const goods = ref({})
 const route = useRoute()
-console.log(route.params.id);
+
 const getGoods = async () => {
   const res = await getDetail(route.params.id)
   goods.value = res.result
