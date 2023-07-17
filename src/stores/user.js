@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useCartStore } from './cartStore'
 import { mergeCartAPI } from '@/apis/cart'
+
 export const useUserStore = defineStore('user', () => {
     const cartStore = useCartStore()
     // 1. 定义管理用户数据的state
