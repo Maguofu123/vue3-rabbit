@@ -29,7 +29,7 @@ const confirm = () => {
             </el-popconfirm>
           </li>
           <li><a href="javascript:;">我的订单</a></li>
-          <li><RouterLink to="/member/user">会员中心</RouterLink></li>
+          <li><RouterLink to="/member">会员中心</RouterLink></li>
         </template>
         <template v-else>
           <!-- 区别在哪 -->
